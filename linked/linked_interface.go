@@ -1,9 +1,9 @@
 package linked
 
 type LinkedInterface[T any] interface {
-	addFirst(el T)
-	addLast(el T)
-	get(el T) (index int)
-	remove(el T)
-	printList()
+	AddFirst(el T)
+	AddLast(el T)
+	Get(el T) (index int)
+	Remove(el T)
+	PrintList()
 }
