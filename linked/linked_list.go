@@ -1,6 +1,9 @@
-package main
+package linked
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type LinkedList[A comparable] struct {
 	Head *Node[A]
@@ -11,14 +14,22 @@ type Node[A comparable] struct {
 	Next  *Node[A]
 }
 
-func (l *LinkedList[A]) addFirst(el A) {
+func New[A comparable](el ...A) *LinkedList[A] {
+	list := &LinkedList[A]{}
+	for _, e := range el {
+		list.AddLast(e)
+	}
+	return list
+}
+
+func (l *LinkedList[A]) AddFirst(el A) {
 	firstNode := &Node[A]{Value: el}
 	firstNode.Next = l.Head
 	l.Head = firstNode
 
 }
 
-func (l *LinkedList[A]) addLast(el A) {
+func (l *LinkedList[A]) AddLast(el A) {
 	if l.Head == nil {
 		l.Head = &Node[A]{Value: el}
 		return
@@ -31,7 +42,7 @@ func (l *LinkedList[A]) addLast(el A) {
 
 }
 
-func (l *LinkedList[A]) get(el A) (index int) {
+func (l *LinkedList[A]) Get(el A) (index int) {
 	if l.Head == nil {
 		return -1
 	}
@@ -52,7 +63,7 @@ func (l *LinkedList[A]) get(el A) (index int) {
 	return -1
 }
 
-func (l *LinkedList[A]) remove(el A) {
+func (l *LinkedList[A]) Remove(el A) {
 	if l.Head == nil {
 		return
 	}
@@ -71,10 +82,21 @@ func (l *LinkedList[A]) remove(el A) {
 	}
 }
 
-func (l *LinkedList[A]) printList() {
+func (l *LinkedList[A]) PrintList() {
 	currentHead := l.Head
 	for currentHead != nil {
 		fmt.Printf("references : %v\n", *currentHead)
 		currentHead = currentHead.Next
 	}
+}
+
+func (l LinkedList[T]) String() string {
+	sb := new(strings.Builder)
+	sb.WriteRune('{')
+
+	for cur := l.Head; cur != nil; cur = cur.Next {
+		sb.WriteString(fmt.Sprintf("%v,", cur.Value))
+	}
+
+	return strings.TrimRight(sb.String(), ",") + "}"
 }

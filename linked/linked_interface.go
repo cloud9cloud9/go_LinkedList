@@ -1,4 +1,4 @@
-package main
+package linked
 
 type LinkedInterface[T any] interface {
 	addFirst(el T)
